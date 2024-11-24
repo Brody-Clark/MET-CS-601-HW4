@@ -58,8 +58,9 @@ function GetSnowyCountry(country: ICountry) {
 }
 
 // Creates a div element with info from given countries with header
-function AddCountriesToElement(element: HTMLElement, header: string, lines: ICountry[]) {
+function AddCountriesToElement(element: HTMLElement, header: string, lines: ICountry[], elementClass: string) {
     const div: HTMLDivElement = document.createElement("div");
+    div.className = elementClass;
     const title: HTMLElement = document.createElement("h2");
     title.textContent = header;
 
@@ -68,6 +69,7 @@ function AddCountriesToElement(element: HTMLElement, header: string, lines: ICou
     let line: HTMLParagraphElement;
     for (let i = 0; i < lines.length; i++) {
         line = document.createElement("p");
+        line.className = "country-info";
         lines[i].getInfo(line);
         div.appendChild(line);
     }
@@ -87,8 +89,14 @@ function GetSnowyCountries(countries: ICountry[]) {
     }
     return snowyCountriesList;
 }
+function CalculateTotalSnowfall(snowyCountries: SnowyCountry[]): number {
+    let total = 0;
+    for (let country of snowyCountries) {
+        total += country.snowLevel;
+    }
+    return total;
+}
 
-function OnFilterSelected()
 // Sample data
 const countries: ICountry[] = [
     new RainyCountry("United States", 28),
@@ -105,6 +113,9 @@ const countries: ICountry[] = [
 
 // Add elements to DOM 
 const rootElement = document.getElementById("output") as HTMLElement;
-AddCountriesToElement(rootElement, "All Countries", countries);
+AddCountriesToElement(rootElement, "All Countries", countries, "all-countries");
 const snowyCountriesList = GetSnowyCountries(countries);
-AddCountriesToElement(rootElement, "Snowy Countries", snowyCountriesList)
+AddCountriesToElement(rootElement, "Snowy Countries", snowyCountriesList, "snowy-countries");
+const snowyTotalElement = document.createElement("p") as HTMLParagraphElement;
+snowyTotalElement.innerText = `Total snow level: ${CalculateTotalSnowfall(snowyCountriesList)} inches.`;
+rootElement.appendChild(snowyTotalElement);
