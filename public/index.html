@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country Manager</title>
+</head>
+
+<body>
+    <h1>Country Data Manager</h1>
+    <div>
+        <label for="filter">Filter: </label>
+        <select name="country-filter" id="filter" onchange="OnFilterSelected()">
+            <option value="All" selected>All</option>
+            <option value="Snowy">Snowy</option>
+            <option value="Rainy">Rainy</option>
+            <option value="Island">Island</option>
+        </select>
+    </div>
+    <div id="output"></div>
+    <script src="app.js"></script>
+</body>
+
+</html>
